@@ -33,7 +33,7 @@ export const validateUser = (user: User): validateUserType => {
     };
 };
 
-const validateEmail = (email: string): boolean => {
+export const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };

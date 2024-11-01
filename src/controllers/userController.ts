@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import UserModel from '../models/User';
 import User from '../entities/User';
-import { validateUser } from './userValidations';
+import { validateUser, validateEmail } from './userValidations';
 import { comparePasswords, hashPassword } from '../utils/hashPassword';
 
 export const createUser = async (req: Request<any, any, any, any> & { user?: User }, res: Response): Promise<any> => {
@@ -36,6 +36,10 @@ interface LoginResponse {
 
 export const loginUser = async (req: Request, res: Response<LoginResponse>): Promise<any> => {
     const { email, password } = req.body;
+
+    if(!validateEmail(email)){
+      return res.status(400).json({ error: 'Invalid email' });
+    };
 
     const user = await UserModel.findOne({ where: { email } });
     
