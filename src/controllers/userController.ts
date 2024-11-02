@@ -21,6 +21,14 @@ export const createUser = async (req: Request<any, any, any, any> & { user?: Use
       return res.status(400).json({ error: message });
     };
 
+    const userByEmail = await UserModel.findOne({
+      where: { email }
+    });
+
+    if(userByEmail){
+      return res.status(400).json({ error: 'Email already registered' });
+    };
+
     user.password = await hashPassword(user.password);
 
     const newUser = await UserModel.create({
