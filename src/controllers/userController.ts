@@ -29,16 +29,11 @@ export const createUser = async (req: Request<any, any, any, any> & { user?: Use
     return res.json({ newUser });
 };
 
-interface LoginResponse {
-  token?: string;
-  error?: string; 
-}
-
-export const loginUser = async (req: Request, res: Response<LoginResponse>): Promise<any> => {
+export const loginUser = async (req: Request<any, any, any, any> & { user?: User }, res: Response): Promise<any> => {
     const { email, password } = req.body;
 
-    if(!validateEmail(email)){
-      return res.status(400).json({ error: 'Invalid email' });
+    if(!validateEmail(email) || !password){
+      return res.status(400).json({ error: 'Invalid email or password' });
     };
 
     const user = await UserModel.findOne({ where: { email } });

@@ -1,6 +1,7 @@
-import { DataTypes, Model, literal } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/db';
 
+import Url from './Url';
 class User extends Model {
     public id!: number;
     public name!: string;
@@ -22,9 +23,8 @@ User.init(
             unique: true,
         },
         password: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.STRING(255),
             allowNull: false,
-            unique: true,
         },
         createdOn: {
             type: DataTypes.DATE,

@@ -3,13 +3,14 @@ import jwt from 'jsonwebtoken';
 
 import User from '../entities/User';
 
-export const authMiddleware = async (req: Request<any, any, any, any> & { user?: User }, res: Response, next : NextFunction, isProtected : boolean): Promise<any> => {
+export const authMiddleware = async (req: Request<any, any, any, any> & { user?: User }, res: Response, next : NextFunction, isProtected : boolean): Promise<Response | undefined> => {
     try{
       const token = req.headers['authorization'];
 
     if (token) { 
       const bearerToken = token.split(' ')[1];
 
+      console.log(bearerToken)
       let validate = true;
 
       jwt.verify(bearerToken, process.env.JWT_SECRET ?? '', (err: any, decoded: any) => {
@@ -22,16 +23,19 @@ export const authMiddleware = async (req: Request<any, any, any, any> & { user?:
       });
 
       if(!validate){
-        return res.status(500).json({ error: 'User not logged' });
+        return res.status(401).json({ error: 'User not logged or invalid token' });
       }
     };
-    if(isProtected && token !== undefined){
-      next();
-    }else if (!isProtected){
-      next();
+    
+    console.log(isProtected, token)
+    if(isProtected && !token){
+      return res.status(401).json({ error: 'User not logged' });
     }
+    
+    next();
+
     }catch(err){
-      return 
+      return res.status(500).json({ error: 'An unexpected error occurred' }); 
     }
 };
 
