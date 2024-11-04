@@ -5,7 +5,7 @@ import swaggerUi from "swagger-ui-express";
 
 import { swaggerSpec } from "./src/swagger";
 import bodyParser from "body-parser";
-import urlRoutes from "./src/routes/routes";
+import appRoutes from "./src/routes/routes";
 import sequelize from "./src/config/db";
 import { setupAssociations } from "./src/models/associations";
 
@@ -14,7 +14,7 @@ try {
   app.use(bodyParser.json());
 
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  app.use("/", urlRoutes);
+  app.use("/", appRoutes);
 
   setupAssociations();
 

@@ -3,9 +3,9 @@ import swaggerJSDoc from 'swagger-jsdoc';
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Minha API',
+    title: 'Minify',
     version: '1.0.0',
-    description: 'Documentação da API',
+    description: 'Documentation for Minify API',
   },
 };
 
