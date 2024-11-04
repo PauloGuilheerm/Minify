@@ -27,7 +27,6 @@ export const authMiddleware = async (req: Request<any, any, any, any> & { user?:
       }
     };
     
-    console.log(isProtected, token)
     if(isProtected && !token){
       return res.status(401).json({ error: 'User not logged' });
     }
