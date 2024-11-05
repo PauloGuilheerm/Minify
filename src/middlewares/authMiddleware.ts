@@ -10,7 +10,6 @@ export const authMiddleware = async (req: Request<any, any, any, any> & { user?:
     if (token) { 
       const bearerToken = token.split(' ')[1];
 
-      console.log(bearerToken)
       let validate = true;
 
       jwt.verify(bearerToken, process.env.JWT_SECRET ?? '', (err: any, decoded: any) => {
